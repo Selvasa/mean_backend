@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require("mongoose");
 const bodyparser=require('body-parser')
 const app = express(); 
+const cors = require('cors'); 
 const createCrud = require('./routes/crud');
 
 async function connectDB() {
@@ -14,6 +15,12 @@ connectDB().catch((err) => {
 })
 
 app.use(bodyparser.json())
+// app.use(cors()); 
+app.use(cors({
+  origin: 'http://localhost:4001',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use('/', createCrud);
 
 app.listen(3000, () => {
