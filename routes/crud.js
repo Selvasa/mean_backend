@@ -23,6 +23,19 @@ router.get('/users', async function (req, res) {
     }
 })
 
+router.put('/update_user/:id', async (req, res) => {
+    try {
+        let id = req.params.id
+        console.log(req.body);
+        
+        let result = await CrudPost.findByIdAndUpdate(id, req.body, { new: true });
+        return res.status(201).json({ message: "Updated SuccessFully", data: result })
+    }
+    catch (err) {
+        res.status(500).json({ message: "Error Uptating User", error: err })
+    }
+
+})
 router.get('/user/:id', async function (req, res) {
     try {
         let result = await CrudPost.findById(req.params.id);
